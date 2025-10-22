@@ -1,0 +1,24 @@
+# Core Django Framework
+Django==5.1.2
+
+# Django Extensions and Add-ons
+django-cors-headers==4.4.0
+django-import-export==4.1.1
+
+# Data Processing
+numpy==2.1.2
+
+# Database (SQLite is included with Python, but adding for completeness)
+# For production, you might want to add:
+# psycopg2-binary==2.9.9  # For PostgreSQL
+# mysqlclient==2.2.4      # For MySQL
+
+# Development and Testing (optional)
+# django-debug-toolbar==4.4.6
+# pytest-django==4.9.0
+
+# Security and Performance (optional for production)
+# gunicorn==21.2.0
+# whitenoise==6.6.0
+
+bs4==0.0.2
