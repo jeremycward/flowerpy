@@ -1,0 +1,9 @@
+<!-- Sub-template for eventline type track items -->
+<track-item start="{{ item.start|date:'Y-m-d' }}" 
+            {% if item.end %}end="{{ item.end|date:'Y-m-d' }}"{% endif %} 
+            id="item_{{ item.id }}"
+            {% if item.additional_info %}remote_info="{{ item.additional_info }}"{% endif %}>
+  <event-item id="event_{{ item.id }}" name="{{ item.name }}" 
+              detail1="{{ item.detail1 }}" detail2="{{ item.detail2 }}" 
+              date="{{ item.start|date:'Y-m-d' }}"></event-item>
+</track-item>

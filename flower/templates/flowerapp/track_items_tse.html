@@ -1,0 +1,9 @@
+{% for item in track.items %}
+  <track-item name="{{ item.name }}" itemcolor="yellow" heading="{{ item.name }}" 
+              detail1="{{ item.detail1 }}" detail2="{{ item.detail2 }}"
+              start="{{ item.start|format_item_datetime }}" 
+              end="{% derive_end_date track.items forloop.counter0 %}"
+              id="item_{{ item.id }}"
+              {% if item.img %}img="{{ item.img }}"{% endif %} 
+              {% if item.additional_info %}remote_info="{{ item.additional_info }}"{% endif %} />
+{% endfor %}

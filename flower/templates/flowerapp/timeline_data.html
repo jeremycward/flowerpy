@@ -1,0 +1,16 @@
+{% load flower_tags %}
+<flower-timeline-data target="timeline_component" id="timeLineData" start="1935-01-01" end="1960-01-01">
+
+  {% for track in timeline_data %}
+    <flower-track type="{{  track.itemType }}" id="track_{{ track.id }}">
+      <track-header>
+        {{ track.name }}
+      </track-header>      
+      
+      {% render_track_items track.itemType track %}
+      
+    </flower-track>
+  {% endfor %}
+
+</flower-timeline-data>
+
