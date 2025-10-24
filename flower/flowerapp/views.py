@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 import json
@@ -9,7 +10,8 @@ from .models import Track, Item
 from django.utils.safestring import SafeString
 # Create your views here.
 
-def index(request):
+@login_required
+def home(request):
    tracks = []  
    itemWidgetsJson = []
    template = loader.get_template("flowerapp/flower.html")

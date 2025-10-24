@@ -12,6 +12,40 @@ from import_export.resources import ModelResource
 from import_export.admin import ImportMixin
 import random
 
+# Customize Django Admin site titles
+admin.site.site_header = 'Timeflower Administration'
+admin.site.site_title = 'Timeflower Admin'
+admin.site.index_title = 'Welcome to Timeflower Administration'
+
+# Simple solution: Override admin index redirect
+from django.conf import settings
+from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
+
+# Store the original admin index view
+original_index = admin.site.index
+
+def custom_admin_index(request, extra_context=None):
+    """Redirect admin index to main app only if user came from successful login"""
+    # Check if this is a redirect from a successful login
+    referrer = request.META.get('HTTP_REFERER', '')
+    
+    # Only redirect if:
+    # 1. Referrer is specifically the admin login page
+    # 2. AND this is a GET request (post-login redirect)
+    # 3. AND there's no 'next' parameter (which would indicate intentional admin access)
+    if (request.method == 'GET' and 
+        '/admin/login/' in referrer and 
+        not request.GET.get('next')):
+        # This appears to be a post-login redirect, send to main app
+        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+    
+    # Otherwise, show normal admin index (direct admin access, bookmarks, etc.)
+    return original_index(request, extra_context)
+
+# Replace the admin index method
+admin.site.index = custom_admin_index
+
 # Register your models here.
 logger = logging.getLogger(__name__)
 

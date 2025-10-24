@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.sessions',  
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'flowerapp',
@@ -146,3 +146,6 @@ LOGGING = {
     },
     
 }
+LOGIN_REDIRECT_URL = "/flower/"        # Where to go after login
+LOGOUT_REDIRECT_URL = "/admin/login/"  # Where to go after logout  
+LOGIN_URL = "/admin/login/"         # Where to redirect for login

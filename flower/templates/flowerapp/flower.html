@@ -1,250 +1,68 @@
-
-
 {% load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
   <title>TimeFlower</title>
         <script type="module" src="{% static 'flowerapp/dist/index.js' %}"></script>
-  <style>
-    @property --dandelion_yellow {
-      syntax: "<color>";
-      inherits: false;
-      initial-value: #14356e;
-    }
-
-    @property --dandelion_yellow_transparent {
-      syntax: "<color>";
-      inherits: false;
-      initial-value: rgba(235, 232, 76, 0.2);
-    }
-
-    @property --app_border_radius {
-      syntax: "<length-percentage>";
-      inherits: false;
-      initial-value: 15px
-    }
-
-    @property --app_background_active {
-      syntax: "<color>";
-      inherits: false;
-      initial-value: rgba(225, 230, 237, 1)
-    }
-
-    @property --app_background_active_darker {
-      syntax: "<color>";
-      inherits: false;
-      initial-value: rgba(215, 220, 238, 1)
-    }
-
-    @property --app_background_empty {
-      syntax: "<color>";
-      inherits: false;
-      initial-value: rgba(60, 60, 77, 1)
-    }
-
-
-
-
-
-
-
-    @property --dandelion_text {
-      syntax: "<color>";
-      inherits: false;
-      initial-value: rgb(249, 156, 27)
-    }
-
-
-    html,
-    body {
-      margin: 10;
-      /* Remove default margin */
-      padding: 10;
-      /* Remove default padding */
-      width: 99%;
-      height: 99%;
-      /* Ensure html is also 100% height */
-      overflow: hidden;
-      /* Optional: Prevent scrollbars if content exceeds viewport */
-    }
-
-    .sunflower-font {
-      color: var(--dandelion_text);
-
-    }
-
-    .grid-border-wrapper {
-      border: 22px solid red;
-      border-radius: var(--app_border_radius);
-      box-sizing: border-box;
-
-    }
-
-    .app-wrapper {
-
-      /* width: 100%; */
-      /* Make app-wrapper 100% width */
-      /* height: 100%; */
-      /* Make app-wrapper 100% height */
-      border-style: solid;
-      border-width: 5px;
-      border-color: var(--dandelion_text);
-      border-radius: var(--app_border_radius);
-      grid-row-start: 1;
-      grid-row-end: 1;
-      grid-column-start: 1;
-      grid-column-end: 1;
-      display: grid;
-      grid-template-columns: 10fr 70fr 5px 20fr 1fr;
-      grid-template-rows: 4fr 40fr 1fr;
-      column-gap: 0px;
-      row-gap: 0px;
-      background-color: var(--dandelion_yellow);
-      border-radius: var(--app_border_radius);
-      box-sizing: border-box;
-      overflow: hidden;
-
-    }
-
-    .app-panel-no-bg {
-      background-color: #00000000
-    }
-
-    .app-panel-lhs-border {
-      border-color: var(--dandelion_text);
-      border-radius: var(--app_border_radius);
-      border-width: 5px;
-      border-style: solid;
-      border-right-style: none;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    .app-panel-rhs-border {
-      border-color: var(--dandelion_text);
-      border-radius: var(--app_border_radius);
-      border-width: 5px;
-      border-style: solid;
-      border-left-style: none;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    .dandelion_alpha_bg {
-      background-color: var(--app_background_empty)
-    }
-
-
-
-    .dandelion_bg {
-      background-color: var(--dandelion_yellow)
-    }
-
-
-    .sidebar {
-
-      grid-row-start: 2;
-      grid-row-end: 2;
-      grid-column-start: 1;
-      grid-column-end: 1;
-
-    }
-
-    .rhs_sidebar {
-      grid-row-start: 2;
-      grid-row-end: 2;
-      grid-column-start: 5;
-      grid-column-end: 5;
-
-
-    }
-
-    .header {
-
-      grid-row-start: 1;
-      grid-row-end: 1;
-      grid-column-start: 1;
-      grid-column-end: 6;
-    }
-
-    .footer {
-
-      grid-row-start: 3;
-      grid-row-end: 3;
-      grid-column-start: 1;
-      grid-column-end: 6;
-    }
-
-
-    .main {
-      grid-row-start: 2;
-      grid-row-end: 2;
-      grid-column-start: 2;
-      grid-column-end: 3;
-
-
-    }
-
-    .splitter {
-      grid-row-start: 2;
-      grid-row-end: 2;
-      grid-column-start: 4;
-      grid-column-end: 5;
-
-    }
-
-    .rhs_resize_gutter {
-      grid-row-start: 2;
-      grid-row-end: 4;
-      grid-column-start: 3;
-      grid-column-end: 3;
-      cursor: col-resize;
-      background-color: var(--dandelion_text);
-
-    }
-
-    .rhs_panel {
-      border-right-style: solid;
-      border-color: var(--dandelion_text);
-      border-width: 5px;
-      border-top-right-radius: var(--app_border_radius);
-      grid-row-start: 2;
-      grid-row-end: 3;
-      grid-column-start: 4;
-      grid-column-end: 4;
-    }
-
-
-
-    body {
-
-      width: 100%;
-      height: 100vh;
-      /* Default font color */
-    }
-  </style>
+  {% include "flowerapp/flower_style.html" %}        
 </head>
 
 <body>
 
   <div class="app-wrapper" id="app-wrapper">
 
-    <div class="dandelion_bg header" id="header">
-      <img src="{% static 'flowerapp/dist/croppedlogo.png' %}" alt="Logo" class="me-2"
-        style="width:20%;height:auto;vertical-align: middle;padding-left: 50px;">
+    <div class="dandelion_bg header " id="header">
+
+        <div class="header_layout">
+
+             <img src="{% static 'flowerapp/dist/croppedlogo.png' %}" alt="Logo" class="me-2"
+        style="width:20%;height:auto;vertical-align: middle;padding-left: 50px;"/>
+
+{% if user.is_authenticated %}
+    <!--
+    <p>Hello, {{ user.username }}!</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Member since: {{ user.date_joined|date:"F Y" }}</p>
+    {% csrf_token %}
+    -->
+{% endif %}        
+      
+      
+      <div class="user-menu" style="margin-left: auto; padding-right: 50px; position: relative;">        
+        {% if user.is_authenticated %}
+          <div class="user-trigger sunflower-font" style="cursor: pointer; padding: 8px; font-size: 16px;">
+            👤 {{ user.username }}
+          </div>
+          <div class="user-dropdown">
+            
+            <form id="home-logout-form" method="post" action="/admin/logout/">
+            {% csrf_token %}
+            <button type="submit" class="dropdown-link" style="background: none; border: none; padding: 0; margin: 0; width: 100%; text-align: left; cursor: pointer;">Log Out</button>
+            </form>
+            
+          </div>
+        {% else %}
+          <a href="{% url 'admin:login' %}" class="sunflower-font" style="color: inherit; text-decoration: none;">Login</a>
+        {% endif %}
+      </div>
+
+      </div>
+
+      
     </div>
 
 
     <div class="dandelion_bg sidebar sunflower-font" id="sidebar">
-      {% include "flowerapp/browser_panel.html" %}
+     
+      {% comment %} {% include "flowerapp/browser_panel.html" %} {% endcomment %}
     </div>
     <div class=" main dandelion_alpha_bg app-panel-lhs-border " id="timeline_view_container">
 
       <flower-timeline-view>
-        {% include "flowerapp/timeline_data.html" %}
+        {% comment %} {% include "flowerapp/timeline_data.html" %} {% endcomment %}
       </flower-timeline-view>
 
     </div>
@@ -262,9 +80,6 @@
 
     </div>
 
-
-
-
     <div class="dandelion_bg footer" id="footer">
     </div>
 
@@ -272,8 +87,63 @@
 
   </div>
 
+<style>
+  /* Header layout should use flexbox */
+  .header_layout {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
 
+  /* CSS-only dropdown menu */
+  .user-menu {
+    position: relative;
+    display: inline-block;
+  }
 
+  .user-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--dandelion_yellow);
+    border: 2px solid var(--dandelion_text);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    min-width: 150px;
+    z-index: 1000;
+    /* Remove margin-top gap that prevents hovering */
+    margin-top: 0px;
+  }
+
+  .user-menu:hover .user-dropdown {
+    display: block;
+  }
+
+  .dropdown-link {
+    display: block;
+    padding: 12px 16px;
+    color: var(--dandelion_text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--dandelion_text);
+    transition: background-color 0.2s ease;
+  }
+
+  .dropdown-link:last-child {
+    border-bottom: none;
+  }
+
+  .dropdown-link:hover {
+    background-color: var(--dandelion_text);
+    color: var(--dandelion_yellow);
+  }
+
+  .user-trigger:hover {
+    background-color: rgba(249, 156, 27, 0.3);
+    border-radius: 4px;
+  }
+</style>
 
 </body>
 
